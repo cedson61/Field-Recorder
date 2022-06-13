@@ -11,6 +11,7 @@
 		7D13F16127F90F2800752E30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D13F16027F90F2800752E30 /* ContentView.swift */; };
 		7D13F16327F90F2E00752E30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D13F16227F90F2E00752E30 /* Assets.xcassets */; };
 		7D13F16627F90F2E00752E30 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D13F16527F90F2E00752E30 /* Preview Assets.xcassets */; };
+		7D22C5262856C5FC007C8402 /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D22C5252856C5FC007C8402 /* RecordingsView.swift */; };
 		7DA15C8D28543E810015E93D /* audioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA15C8C28543E810015E93D /* audioRecorder.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,6 +21,7 @@
 		7D13F16027F90F2800752E30 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7D13F16227F90F2E00752E30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D13F16527F90F2E00752E30 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7D22C5252856C5FC007C8402 /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
 		7D86F4C0284D68C300A0B4C7 /* Field-Recorder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Field-Recorder-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7DA15C8C28543E810015E93D /* audioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = audioRecorder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,6 +59,7 @@
 				7D86F4C0284D68C300A0B4C7 /* Field-Recorder-Info.plist */,
 				7D13F15E27F90F2800752E30 /* Field_RecorderApp.swift */,
 				7D13F16027F90F2800752E30 /* ContentView.swift */,
+				7D22C5252856C5FC007C8402 /* RecordingsView.swift */,
 				7DA15C8C28543E810015E93D /* audioRecorder.swift */,
 				7D13F16227F90F2E00752E30 /* Assets.xcassets */,
 				7D13F16427F90F2E00752E30 /* Preview Content */,
@@ -144,6 +147,7 @@
 			files = (
 				7D13F16127F90F2800752E30 /* ContentView.swift in Sources */,
 				7DA15C8D28543E810015E93D /* audioRecorder.swift in Sources */,
+				7D22C5262856C5FC007C8402 /* RecordingsView.swift in Sources */,
 				7D13F15F27F90F2800752E30 /* Field_RecorderApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

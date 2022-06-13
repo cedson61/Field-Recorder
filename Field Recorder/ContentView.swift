@@ -17,10 +17,6 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     let mainRecorder = audioRecorder()
     
-    
-    
-    
-    
 
     //define UI option arrays
     
@@ -99,107 +95,120 @@ struct ContentView: View {
     
 
     var body: some View {
+        NavigationView{
         
-        ZStack {
-            VStack(spacing: 15) {
-                Text("Field Recorder")
-                    .font(.largeTitle)
-                    .padding([.top], 50)
-                Text("Maximum recording time is 24 hours.")
-                    .font(.system(size: 10, weight: .light, design: .default))
-                if !isRecordingToggled{
-                Group{
-                        Text("Microphone Mode")
-                        Picker(selection: $microphoneOptionArrayIndex, label: Text("Microphone Mode")) {
-                                        ForEach(0 ..< microphoneOptionArray.count) {
-                                            Text(self.microphoneOptionArray[$0])
-                                        }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .onChange(of: microphoneOptionArrayIndex) { _ in
-                                    issueHapticFeedback()
-                                }
-                        
-                        Text("Frequency Mode")
-                        Picker(selection: $frequencyArrayIndex, label: Text("Frequency Mode")) {
-                                        ForEach(0 ..< frequencyArray.count) {
-                                            Text(self.frequencyArray[$0])
-                                        }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .onChange(of: frequencyArrayIndex) { _ in
-                                    issueHapticFeedback()
-                                }
-                        Text("Pickup Pattern")
-                        Picker(selection: $pickupPatternArrayIndex, label: Text("Pickup Pattern")) {
-                                        ForEach(0 ..< pickupPatternArray.count) {
-                                            Text(self.pickupPatternArray[$0])
-                                        }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .onChange(of: pickupPatternArrayIndex) { _ in
-                                    issueHapticFeedback()
-                                }
-                    }.padding([.leading, .trailing],40)
-                }
-                    
-                if isRecordingToggled{
-                    Text("\(String(format: "%02d", timerHours)):\(String(format: "%02d", timerMinutes)):\(String(format: "%02d", timerSeconds))").font(.largeTitle).fontWeight(.ultraLight)
-                
-                }
-                
-                Spacer()
-                Button(action: {
-                    self.isRecordingToggled.toggle()
-                    if(isRecordingToggled){
-                        mainRecorder.startRecording(sampleRateIndex: frequencyArrayIndex)
-                    } else{
-                        mainRecorder.finishRecording(success: true)
-                        shareRecording()
+            ZStack {
+                VStack(spacing: 15) {
+                    Text("Field Recorder")
+                        .font(.largeTitle)
+                        .padding([.top], 50)
+                    Text("Maximum recording time is 24 hours.")
+                        .font(.system(size: 10, weight: .light, design: .default))
+                    if !isRecordingToggled{
+                    Group{
+                            Text("Microphone Mode")
+                            Picker(selection: $microphoneOptionArrayIndex, label: Text("Microphone Mode")) {
+                                            ForEach(0 ..< microphoneOptionArray.count) {
+                                                Text(self.microphoneOptionArray[$0])
+                                            }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .onChange(of: microphoneOptionArrayIndex) { _ in
+                                        issueHapticFeedback()
+                                    }
+                            
+                            Text("Frequency Mode")
+                            Picker(selection: $frequencyArrayIndex, label: Text("Frequency Mode")) {
+                                            ForEach(0 ..< frequencyArray.count) {
+                                                Text(self.frequencyArray[$0])
+                                            }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .onChange(of: frequencyArrayIndex) { _ in
+                                        issueHapticFeedback()
+                                    }
+                            Text("Pickup Pattern")
+                            Picker(selection: $pickupPatternArrayIndex, label: Text("Pickup Pattern")) {
+                                            ForEach(0 ..< pickupPatternArray.count) {
+                                                Text(self.pickupPatternArray[$0])
+                                            }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            .onChange(of: pickupPatternArrayIndex) { _ in
+                                        issueHapticFeedback()
+                                    }
+                        }.padding([.leading, .trailing],40)
                     }
-                    timerStart()
-                }){
-                    ZStack{
-                        if isRecordingToggled{
-                            Rectangle()
-                              .frame(width: 55, height: 55)
-                              .foregroundColor(Color.red.opacity(inputVolumeLevel))
+                        
+                    if isRecordingToggled{
+                        Text("\(String(format: "%02d", timerHours)):\(String(format: "%02d", timerMinutes)):\(String(format: "%02d", timerSeconds))").font(.largeTitle).fontWeight(.ultraLight)
+                    
+                    }
+                    
+                    Spacer()
+                    Button(action: {
+                        self.isRecordingToggled.toggle()
+                        if(isRecordingToggled){
+                            mainRecorder.startRecording(sampleRateIndex: frequencyArrayIndex)
+                        } else{
+                            mainRecorder.finishRecording(success: true)
+                            shareRecording()
                         }
-                        if !isRecordingToggled{
-                            Circle()
-                                .frame(width: 100, height: 100)
-                                .foregroundColor(.red)
-                        }
+                        timerStart()
+                    }){
+                        ZStack{
+                            if isRecordingToggled{
+                                Rectangle()
+                                  .frame(width: 55, height: 55)
+                                  .foregroundColor(Color.red.opacity(inputVolumeLevel))
+                            }
+                            if !isRecordingToggled{
+                                Circle()
+                                    .frame(width: 100, height: 100)
+                                    .foregroundColor(.red)
+                            }
 
-                        
-                        if (colorScheme == .light) {
-                            Circle()
-                                .strokeBorder(Color.black.opacity(0.2), lineWidth: 5)
-                                .frame(width: 125, height: 125)
                             
-                        } else {
-                            Circle()
-                                .strokeBorder(Color.white, lineWidth: 5)
-                                .frame(width: 125, height: 125)
-                        }
-                        
+                            if (colorScheme == .light) {
+                                Circle()
+                                    .strokeBorder(Color.black.opacity(0.2), lineWidth: 5)
+                                    .frame(width: 125, height: 125)
+                                
+                            } else {
+                                Circle()
+                                    .strokeBorder(Color.white, lineWidth: 5)
+                                    .frame(width: 125, height: 125)
+                            }
                             
-                    }.padding([.bottom], 50)
+                                
+                        }.padding([.bottom], 50)
+                    }
+                    
+                    NavigationLink(destination: RecordingsView()) {
+                        Image(systemName: "folder.fill").foregroundStyle(.white, .blue)
+                    }.navigationBarTitle("Back")
+                        .navigationBarHidden(true)
+                    
+                    
+                    
+                        
+                        
+                        
+
                 }
+                
+            }.onAppear {
+                mainRecorder.checkRecordingPerms()
             }
-            
-        }.onAppear {
-            mainRecorder.checkRecordingPerms()
         }
     }
-}
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .preferredColorScheme(.dark)
-.previewInterfaceOrientation(.portrait)
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+                .preferredColorScheme(.dark)
+    .previewInterfaceOrientation(.portrait)
+        }
     }
+
 }
-
-
