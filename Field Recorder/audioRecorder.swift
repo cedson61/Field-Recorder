@@ -12,6 +12,7 @@ import AVFoundation
 class audioRecorder: NSObject, AVAudioRecorderDelegate {
     var recordingSession: AVAudioSession!
     var mainRecorder: AVAudioRecorder!
+    var currentlyRecording = false
     var currentRandom = ""
     
     
@@ -57,9 +58,6 @@ class audioRecorder: NSObject, AVAudioRecorderDelegate {
             }
     }
     
-    
-    
-    
     func startRecording(sampleRateIndex: Int) {
         var selectedSampleRate: Int
         
@@ -81,12 +79,7 @@ class audioRecorder: NSObject, AVAudioRecorderDelegate {
             selectedSampleRate = 44100
             
         }
-        
-        
 
-        
-
-        // 4
         let settings = [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
             AVSampleRateKey: selectedSampleRate,
@@ -98,7 +91,9 @@ class audioRecorder: NSObject, AVAudioRecorderDelegate {
             // 5
             mainRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
             mainRecorder.delegate = self
+            mainRecorder.isMeteringEnabled = true
             mainRecorder.record()
+            currentlyRecording = true
         } catch {
             finishRecording(success: false)
         }
@@ -108,12 +103,22 @@ class audioRecorder: NSObject, AVAudioRecorderDelegate {
     func finishRecording(success: Bool) {
 
         mainRecorder.stop()
+        currentlyRecording = false
         mainRecorder = nil
 
         if success {
             print("recording saved.")
         } else {
             print("recording failed...")
+        }
+    }
+    
+    func getCurrentVolume() -> Float{
+        if(currentlyRecording){
+            mainRecorder.updateMeters()
+            return mainRecorder.averagePower(forChannel: 1)
+        } else {
+            return 0.0
         }
     }
     

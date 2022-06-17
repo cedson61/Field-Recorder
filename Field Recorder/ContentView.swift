@@ -36,7 +36,26 @@ struct ContentView: View {
     @State var timerMinutes: Int = 0
     @State var timerSeconds: Int = 0
     
-    @State var inputVolumeLevel: Double = 0.1
+    @State var meteringRunning: Bool = false
+    @State var inputVolumeLevel: Float = 0.1
+    
+    func meteringToggle(){
+        if(!meteringRunning){
+            _ = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { timer in
+                if(isRecordingToggled){
+                    var currentFloatValue = abs(mainRecorder.getCurrentVolume())
+                    if(currentFloatValue > 40){
+                        currentFloatValue = 40
+                    }
+                    inputVolumeLevel = round((1 - (currentFloatValue / 40)) * 100) / 100.0
+                    
+                    
+                }
+            }
+            meteringRunning = true
+        }
+        
+    }
     
     func timerStart(){
         timerHours = 0
@@ -63,8 +82,6 @@ struct ContentView: View {
                 }
                 
                 timerSeconds = timerSeconds + 1
-                inputVolumeLevel = inputVolumeLevel + 0.1
-                
             }
         }
         
@@ -155,12 +172,14 @@ struct ContentView: View {
                             shareRecording()
                         }
                         timerStart()
+                        meteringToggle()
+                        
                     }){
                         ZStack{
                             if isRecordingToggled{
                                 Rectangle()
                                   .frame(width: 55, height: 55)
-                                  .foregroundColor(Color.red.opacity(inputVolumeLevel))
+                                  .foregroundColor(Color.red.opacity(Double(inputVolumeLevel)))
                             }
                             if !isRecordingToggled{
                                 Circle()
