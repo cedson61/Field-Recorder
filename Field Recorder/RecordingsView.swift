@@ -8,6 +8,7 @@
 import SwiftUI
 import BottomSheet
 import AVFoundation
+import Foundation
 
 struct nameDatePair {
     var name: String
@@ -17,6 +18,24 @@ struct nameDatePair {
 
 
 struct RecordingsView: View {
+    func playingToggleCounter(){
+            _ = Timer.scheduledTimer(withTimeInterval: 0.02, repeats: true) { timer in
+                if(mainHandler.isPlaying){
+                    if currentTime >= 3600 {
+                        formatter.allowedUnits = [.second, .minute, .hour]
+                    } else {
+                        formatter.allowedUnits = [.second, .minute]
+                    }
+                    formatter.zeroFormattingBehavior = .pad
+                    mainHandler.updateMeter()
+                    currentTime = mainHandler.currentTime
+                    totalTime = mainHandler.totalTime
+                }
+            }
+        
+    }
+    
+    
     @State var refresh: Bool = false
     @State var recordingsFound: Bool = true
     @State private var isPresentingDeleteConfirm: Bool = false
@@ -24,11 +43,20 @@ struct RecordingsView: View {
     @State var playerFileName: String = ""
     @StateObject var mainHandler = AudioHandler()
     
+    @State var currentTime = 0.0
+    @State var totalTime = 0.0
+    
+    let formatter = DateComponentsFormatter()
+    
     var body: some View {
         VStack{
             Text("Saved Recordings")
                 .font(.title)
                 .padding([.top], 50)
+                .onAppear(){
+                    formatter.allowedUnits = [.second, .minute]
+                    formatter.zeroFormattingBehavior = .pad
+                }
             
             if(!recordingsFound){
                 Text("No recordings found.").font(.subheadline)
@@ -71,6 +99,8 @@ struct RecordingsView: View {
                             }.frame(height:60)
                         }.onTapGesture {
                             playerFileName = x
+                            currentTime = 0.0
+                            totalTime = 0.0
                             isPresented = true
                          }
           
@@ -81,6 +111,12 @@ struct RecordingsView: View {
                     }
                 } .bottomSheet(isPresented: $isPresented, height: 300) {
                     Text(playerFileName)
+                    Spacer()
+                    HStack{
+                        Text(formatter.string(from: currentTime)!).font(.title2)
+                        Text("/").foregroundColor(.gray)
+                        Text(formatter.string(from: totalTime)!).font(.title2).foregroundColor(.gray)
+                    }
                     Spacer()
                     if(mainHandler.isPlaying){
                         Button(action: {
@@ -93,6 +129,7 @@ struct RecordingsView: View {
                     } else {
                         Button(action: {
                             mainHandler.fileName = playerFileName
+                            playingToggleCounter()
                             mainHandler.isPlaying = true
                                 }) {
                                     Image(systemName: "play.fill").foregroundStyle(.white).font(.system(size: 40, weight: .light))
@@ -232,6 +269,9 @@ class AudioHandler: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     var myAudioPlayer = AVAudioPlayer()
     var fileName = ""
+    
+    var currentTime = 0.0
+    var totalTime = 0.0
 
     override init() {
         super.init()
@@ -246,6 +286,11 @@ class AudioHandler: NSObject, ObservableObject, AVAudioPlayerDelegate {
 
     }
 
+    func updateMeter(){
+        currentTime = myAudioPlayer.currentTime
+        totalTime = myAudioPlayer.duration
+    }
+    
     func playAudio() {
         let url = getFinalFilePath(filename: fileName)
 
