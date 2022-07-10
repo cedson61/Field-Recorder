@@ -13,6 +13,8 @@
 		7D13F16627F90F2E00752E30 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D13F16527F90F2E00752E30 /* Preview Assets.xcassets */; };
 		7D22C5262856C5FC007C8402 /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D22C5252856C5FC007C8402 /* RecordingsView.swift */; };
 		7DA15C8D28543E810015E93D /* audioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA15C8C28543E810015E93D /* audioRecorder.swift */; };
+		7DBD81B2287A4DE50093B8CB /* Pages in Frameworks */ = {isa = PBXBuildFile; productRef = 7DBD81B1287A4DE50093B8CB /* Pages */; };
+		7DBD81B5287A4E230093B8CB /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 7DBD81B4287A4E230093B8CB /* BottomSheet */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DBD81B2287A4DE50093B8CB /* Pages in Frameworks */,
+				7DBD81B5287A4E230093B8CB /* BottomSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +95,10 @@
 			dependencies = (
 			);
 			name = "Field Recorder";
+			packageProductDependencies = (
+				7DBD81B1287A4DE50093B8CB /* Pages */,
+				7DBD81B4287A4E230093B8CB /* BottomSheet */,
+			);
 			productName = "Field Recorder";
 			productReference = 7D13F15B27F90F2800752E30 /* Field Recorder.app */;
 			productType = "com.apple.product-type.application";
@@ -119,6 +127,10 @@
 				Base,
 			);
 			mainGroup = 7D13F15227F90F2800752E30;
+			packageReferences = (
+				7DBD81B0287A4DE50093B8CB /* XCRemoteSwiftPackageReference "Pages" */,
+				7DBD81B3287A4E230093B8CB /* XCRemoteSwiftPackageReference "bottom-sheet" */,
+			);
 			productRefGroup = 7D13F15C27F90F2800752E30 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -355,6 +367,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7DBD81B0287A4DE50093B8CB /* XCRemoteSwiftPackageReference "Pages" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nachonavarro/Pages";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.5;
+			};
+		};
+		7DBD81B3287A4E230093B8CB /* XCRemoteSwiftPackageReference "bottom-sheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weitieda/bottom-sheet";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7DBD81B1287A4DE50093B8CB /* Pages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7DBD81B0287A4DE50093B8CB /* XCRemoteSwiftPackageReference "Pages" */;
+			productName = Pages;
+		};
+		7DBD81B4287A4E230093B8CB /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7DBD81B3287A4E230093B8CB /* XCRemoteSwiftPackageReference "bottom-sheet" */;
+			productName = BottomSheet;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7D13F15327F90F2800752E30 /* Project object */;
 }
