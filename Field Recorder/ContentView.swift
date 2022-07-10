@@ -21,7 +21,7 @@ struct ContentView: View {
 
     //define UI option arrays
     
-    @State var pageIndex: Int = 0
+    @State var pageIndex: Int = 2
     
     private var microphoneOptionArray = ["Front", "Back", "Mono"]
     @State private var microphoneOptionArrayIndex = 0
@@ -221,6 +221,7 @@ struct ContentView: View {
                 
             }
             RecordingsView()
+            SettingsView()
         
         
         }
