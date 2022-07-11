@@ -98,9 +98,13 @@ struct RecordingsView: View {
                                 
                             }.frame(height:60)
                         }.onTapGesture {
+                            mainHandler.stopAudio()
                             playerFileName = x
                             currentTime = 0.0
                             totalTime = 0.0
+                            mainHandler.fileName = playerFileName
+                            mainHandler.initializeAudio()
+                            totalTime = mainHandler.totalTime
                             isPresented = true
                          }
           
@@ -112,11 +116,53 @@ struct RecordingsView: View {
                 } .bottomSheet(isPresented: $isPresented, height: 300) {
                     Text(playerFileName)
                     Spacer()
+                    
+                    
+                    Slider(value: $currentTime, in: 0...totalTime) { editing in
+                        if(editing){
+                            mainHandler.pauseAudio()
+                            mainHandler.isPlaying = false
+                        } else{
+                            mainHandler.resumeAudio(curr: currentTime)
+                        }
+                        
+                        
+                    }.padding().accentColor(.red)
+
+                    Spacer()
+                    
                     HStack{
                         Text(formatter.string(from: currentTime)!).font(.title2)
+                            .onTapGesture {
+                                if(totalTime < 10.0){
+                                    mainHandler.skipBackward(amount: 5.0)
+                                } else if (totalTime > 10.0 && totalTime < 60.0){
+                                    mainHandler.skipBackward(amount: 10.0)
+                                } else if (totalTime > 60.0 && totalTime < 300.0){
+                                    mainHandler.skipBackward(amount: 30.0)
+                                } else {
+                                    mainHandler.skipBackward(amount: 60.0)
+                                }
+                                
+                             }
                         Text("/").foregroundColor(.gray)
                         Text(formatter.string(from: totalTime)!).font(.title2).foregroundColor(.gray)
+                            .onTapGesture {
+                                if(totalTime < 10.0){
+                                    mainHandler.skipForward(amount: 5.0)
+                                } else if (totalTime > 10.0 && totalTime < 60.0){
+                                    mainHandler.skipForward(amount: 10.0)
+                                } else if (totalTime > 60.0 && totalTime < 300.0){
+                                    mainHandler.skipForward(amount: 30.0)
+                                } else {
+                                    mainHandler.skipForward(amount: 60.0)
+                                }
+                                
+                             }
                     }
+                    
+                    
+                    
                     Spacer()
                     if(mainHandler.isPlaying){
                         Button(action: {
@@ -130,7 +176,8 @@ struct RecordingsView: View {
                         Button(action: {
                             mainHandler.fileName = playerFileName
                             playingToggleCounter()
-                            mainHandler.isPlaying = true
+                            //mainHandler.isPlaying = true
+                            mainHandler.resumeAudio(curr: currentTime)
                                 }) {
                                     Image(systemName: "play.fill").foregroundStyle(.white).font(.system(size: 40, weight: .light))
                         }
@@ -291,6 +338,21 @@ class AudioHandler: NSObject, ObservableObject, AVAudioPlayerDelegate {
         totalTime = myAudioPlayer.duration
     }
     
+    func initializeAudio(){
+        let url = getFinalFilePath(filename: fileName)
+
+        do {
+            myAudioPlayer = try AVAudioPlayer(contentsOf: url)
+            myAudioPlayer.delegate = self
+            myAudioPlayer.prepareToPlay()
+            currentTime = myAudioPlayer.currentTime
+            totalTime = myAudioPlayer.duration
+            print(myAudioPlayer.duration)
+        } catch {
+            print("fuck")
+        }
+    }
+    
     func playAudio() {
         let url = getFinalFilePath(filename: fileName)
 
@@ -304,9 +366,28 @@ class AudioHandler: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    func resumeAudio(curr: TimeInterval){
+        var temp = curr
+        isPlaying = true
+        myAudioPlayer.currentTime = temp
+        
+    }
+    
+    func pauseAudio(){
+        myAudioPlayer.pause()
+    }
+    
     func stopAudio(){
         myAudioPlayer.stop()
         isPlaying = false
+    }
+    
+    func skipForward(amount: Double){
+        myAudioPlayer.currentTime += amount
+    }
+    
+    func skipBackward(amount: Double){
+        myAudioPlayer.currentTime -= amount
     }
 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {

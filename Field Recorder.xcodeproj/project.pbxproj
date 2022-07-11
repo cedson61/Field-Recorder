@@ -17,6 +17,8 @@
 		7DBD81B5287A4E230093B8CB /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 7DBD81B4287A4E230093B8CB /* BottomSheet */; };
 		7DBD81BA287A78F70093B8CB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBD81B9287A78F70093B8CB /* SettingsView.swift */; };
 		7DBD81BC287A97220093B8CB /* TunerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBD81BB287A97220093B8CB /* TunerView.swift */; };
+		7DF3AD78287CC20100EA2A8B /* PagerTabStripView in Frameworks */ = {isa = PBXBuildFile; productRef = 7DF3AD77287CC20100EA2A8B /* PagerTabStripView */; };
+		7DF3AD7A287CC3CB00EA2A8B /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3AD79287CC3CB00EA2A8B /* RecorderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,7 @@
 		7DA15C8C28543E810015E93D /* audioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = audioRecorder.swift; sourceTree = "<group>"; };
 		7DBD81B9287A78F70093B8CB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7DBD81BB287A97220093B8CB /* TunerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunerView.swift; sourceTree = "<group>"; };
+		7DF3AD79287CC3CB00EA2A8B /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DF3AD78287CC20100EA2A8B /* PagerTabStripView in Frameworks */,
 				7DBD81B2287A4DE50093B8CB /* Pages in Frameworks */,
 				7DBD81B5287A4E230093B8CB /* BottomSheet in Frameworks */,
 			);
@@ -67,6 +71,7 @@
 				7D86F4C0284D68C300A0B4C7 /* Field-Recorder-Info.plist */,
 				7D13F15E27F90F2800752E30 /* Field_RecorderApp.swift */,
 				7D13F16027F90F2800752E30 /* ContentView.swift */,
+				7DF3AD79287CC3CB00EA2A8B /* RecorderView.swift */,
 				7D22C5252856C5FC007C8402 /* RecordingsView.swift */,
 				7DBD81B9287A78F70093B8CB /* SettingsView.swift */,
 				7DBD81BB287A97220093B8CB /* TunerView.swift */,
@@ -104,6 +109,7 @@
 			packageProductDependencies = (
 				7DBD81B1287A4DE50093B8CB /* Pages */,
 				7DBD81B4287A4E230093B8CB /* BottomSheet */,
+				7DF3AD77287CC20100EA2A8B /* PagerTabStripView */,
 			);
 			productName = "Field Recorder";
 			productReference = 7D13F15B27F90F2800752E30 /* Field Recorder.app */;
@@ -136,6 +142,7 @@
 			packageReferences = (
 				7DBD81B0287A4DE50093B8CB /* XCRemoteSwiftPackageReference "Pages" */,
 				7DBD81B3287A4E230093B8CB /* XCRemoteSwiftPackageReference "bottom-sheet" */,
+				7DF3AD76287CC20100EA2A8B /* XCRemoteSwiftPackageReference "PagerTabStripView" */,
 			);
 			productRefGroup = 7D13F15C27F90F2800752E30 /* Products */;
 			projectDirPath = "";
@@ -168,6 +175,7 @@
 				7DA15C8D28543E810015E93D /* audioRecorder.swift in Sources */,
 				7D22C5262856C5FC007C8402 /* RecordingsView.swift in Sources */,
 				7D13F15F27F90F2800752E30 /* Field_RecorderApp.swift in Sources */,
+				7DF3AD7A287CC3CB00EA2A8B /* RecorderView.swift in Sources */,
 				7DBD81BC287A97220093B8CB /* TunerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +401,14 @@
 				kind = branch;
 			};
 		};
+		7DF3AD76287CC20100EA2A8B /* XCRemoteSwiftPackageReference "PagerTabStripView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/xmartlabs/PagerTabStripView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -405,6 +421,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7DBD81B3287A4E230093B8CB /* XCRemoteSwiftPackageReference "bottom-sheet" */;
 			productName = BottomSheet;
+		};
+		7DF3AD77287CC20100EA2A8B /* PagerTabStripView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7DF3AD76287CC20100EA2A8B /* XCRemoteSwiftPackageReference "PagerTabStripView" */;
+			productName = PagerTabStripView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
